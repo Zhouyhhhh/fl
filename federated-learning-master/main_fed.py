@@ -152,6 +152,9 @@ if __name__ == '__main__':
                 t1_total = time()
                 sign1, t1, w1 = rsu1.authentication(req1, False, exp)
                 sign2, t2, w2 = rsu2.authentication(req2, False, exp)
+
+
+
                 t2_total = time()
                 T_1_total += t2_total - t1_total
                 print('total auth 1:', (t2_total - t1_total) / 2)
@@ -271,75 +274,3 @@ if __name__ == '__main__':
     print("Testing accuracy: {:.2f}".format(acc_test))
     print("Testing loss: {:.2f}".format(loss_test))
 
-    # chart 1
-    matplotlib.rcParams['axes.unicode_minus'] = False
-    label_list = ['gradient calculation', 'authentication 1', 'generate token']  # 横坐标刻度显示值
-    num_list1 = [T1[1] + T1[2] + T1[3], T1[4], T1[5]]  # 纵坐标值1
-    x = range(len(num_list1))
-    # 绘制条形图
-    rects1 = plt.bar(x, height=num_list1, width=0.6, alpha=0.7, color='blue')
-
-    # 设置y轴属性
-    plt.ylim(0, 0.035)
-    plt.ylabel('time(ms)')
-
-    # 设置x轴属性
-    plt.xticks([index for index in x], label_list)
-    plt.xlabel("authentication 1")
-
-    # 显示文本
-    for rect in rects1:
-        height = rect.get_height()
-        plt.text(rect.get_x() + rect.get_width() / 2, height + 1, str(height), ha='center', va='bottom')
-
-    plt.savefig("chart 1")
-
-    plt.clf()
-
-    # chart 2
-    x = range(10)
-    y = []
-    for i in range(50):
-        if (i + 1) % 5 == 0:
-            y.append(fed_time[i])
-    plt.plot(x, y)
-    plt.ylim(0, 15)
-    plt.xlabel('epochs')
-    plt.ylabel('time(ms)')
-    plt.savefig("chart 2")
-
-    plt.clf()
-
-    # chart 3
-    print('len')
-    print(len(AccTrain))
-    print(AccTrain)
-
-    x = range(10)
-    xlable = [(i + 1) * 5 for i in range(10)]
-    atrain = []
-    atest = []
-    ltrain = []
-    ltest = []
-    for i in range(50):
-        if (i + 1) % 5 == 0:
-            atrain.append(AccTrain[i])
-            atest.append(AccTest[i])
-            ltrain.append(LossTrain[i])
-            ltest.append(LossTest[i])
-
-    plt.plot(x, atrain, color='red', label='AccTrain', zorder=5)
-    plt.plot(x, atest, color='blue', label='AccTest', zorder=10)
-    plt.plot(x, ltrain, color='green', label='LossTrain', zorder=15)
-    plt.plot(x, ltest, color='yellow', label='LossTest', zorder=20)
-    plt.legend()
-
-    # 设置y轴属性
-    plt.ylim(0, 100)
-    plt.ylabel('%')
-    plt.xticks([index for index in x], xlable)
-    plt.xlabel('epochs')
-
-    plt.savefig("chart 3")
-
-    plt.clf()
